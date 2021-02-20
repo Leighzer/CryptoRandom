@@ -10,15 +10,15 @@ namespace CryptoRandom
     public class CryptoRandom : Random
     {
         private RNGCryptoServiceProvider _rng = new RNGCryptoServiceProvider();
-        private byte[] _uint32Buffer = new byte[4];
 
         public CryptoRandom() { }
         public CryptoRandom(Int32 ignoredSeed) { }
 
         public override Int32 Next()
         {
-            _rng.GetBytes(_uint32Buffer);
-            return BitConverter.ToInt32(_uint32Buffer, 0) & 0x7FFFFFFF;
+            byte[] uint32Buffer = new byte[4];
+            _rng.GetBytes(uint32Buffer);
+            return BitConverter.ToInt32(uint32Buffer, 0) & 0x7FFFFFFF;
         }
 
         public override Int32 Next(Int32 maxValue)
@@ -27,6 +27,7 @@ namespace CryptoRandom
             {
                 throw new ArgumentOutOfRangeException("maxValue");
             }
+
             return Next(0, maxValue);
         }
 
@@ -43,12 +44,13 @@ namespace CryptoRandom
             }
 
             Int64 diff = maxValue - minValue;
+            Int64 max = (1 + (Int64)UInt32.MaxValue);
+            byte[] uint32Buffer = new byte[4];
             while (true)
-            {
-                _rng.GetBytes(_uint32Buffer);
-                UInt32 rand = BitConverter.ToUInt32(_uint32Buffer, 0);
+            {   
+                _rng.GetBytes(uint32Buffer);
+                UInt32 rand = BitConverter.ToUInt32(uint32Buffer, 0);
 
-                Int64 max = (1 + (Int64)UInt32.MaxValue);
                 Int64 remainder = max % diff;
                 if (rand < max - remainder)
                 {
@@ -60,13 +62,14 @@ namespace CryptoRandom
         public override double NextDouble()
         {
             double result;
+            byte[] uint64Buffer = new byte[8];
             do
-            {
-                byte[] bytes = new byte[8];
-                _rng.GetBytes(bytes);
-                result = (double)BitConverter.ToUInt64(bytes, 0) / ulong.MaxValue;
+            {   
+                _rng.GetBytes(uint64Buffer);
+                result = (double)BitConverter.ToUInt64(uint64Buffer, 0) / ulong.MaxValue;
             }
             while (result == 1.0d);
+
             return result;
         }
 
@@ -76,6 +79,7 @@ namespace CryptoRandom
             {
                 throw new ArgumentNullException("buffer");
             }
+
             _rng.GetBytes(buffer);
         }
 
