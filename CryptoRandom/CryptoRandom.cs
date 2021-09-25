@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CryptoRandom
+namespace CryptoRandomLibrary
 {
     // https://docs.microsoft.com/en-us/archive/msdn-magazine/2007/september/net-matters-tales-from-the-cryptorandom
     // Adapted from above article - fulfills Random interface using the RNGCryptoServiceProvider

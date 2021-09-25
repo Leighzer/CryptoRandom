@@ -1,11 +1,11 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using CryptoRandomLibrary;
+using System;
 
-namespace CryptoRandom
+namespace CryptoRandomExample
 {
-    public class Program
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
             CryptoRandom random = new CryptoRandom();
             Console.WriteLine($"Hello {random.Next().ToString()}!");
