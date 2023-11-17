@@ -9,7 +9,7 @@ namespace CryptoRandomLibrary
     // Adapted from above article - fulfills Random interface using the RNGCryptoServiceProvider
     public class CryptoRandom : Random
     {
-        private RNGCryptoServiceProvider _rng = new RNGCryptoServiceProvider();
+        private RandomNumberGenerator _rng = RandomNumberGenerator.Create();
 
         public CryptoRandom() { }
         public CryptoRandom(Int32 ignoredSeed) { }
